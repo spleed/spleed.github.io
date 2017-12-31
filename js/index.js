@@ -58,6 +58,7 @@ S.ui = {
         if(u.id){
             $('body').addClass('user-logged-on');
             $('#userName').text(u.display_name);
+            $('#userLink').attr('href', u.external_urls.spotify);
             $('#user').css('background-image', 'url('+u.images[0].url+')')
         } else {
             $('body').removeClass('user-logged-on');
@@ -357,7 +358,7 @@ $(document).ready(function(){
             S.ui.init();
         }
     } else if(code){
-        $.post('https://us-central1-spleditor-6983c.cloudfunctions.net/getAccessToken', { code: code, from: S.SOURCE }, function(response){
+        $.post(S.FUNCTIONS_URL + 'getAccessToken', { code: code, from: S.SOURCE }, function(response){
             S.fn.login(response);
             S.utils.cleanUrl();
             S.ui.init();
