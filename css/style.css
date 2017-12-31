@@ -58,7 +58,7 @@ h1{
 #title{
     text-align: center;
 }
-#title h1 span{
+.user-logged-on #title h1 span{
     display: inline-block;
     font-size: 2rem;
 }
