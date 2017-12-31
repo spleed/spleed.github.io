@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>spleditor</title>
+    <link rel="stylesheet" href="./css/normalize.css">
+    <link rel="stylesheet" href="./css/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300" rel="stylesheet">
+    <script defer src="./js/fontawesome-all.min.js"></script>
+  </head>
+  <body>
+      <main>
+          <header id="title">
+              <h1>spleed</h1>
+              <span class="user-logged-off">A Spotify's playlists quick editor</span>
+          </header>
+
+          <section id="login" class="user-logged-off">
+              <a id="loginButton" class="button" href="https://us-central1-spleditor-6983c.cloudfunctions.net/getAuthUrl?"><i class="fab fa-spotify"></i> Log in with Spotify</a>
+              <a id="loadButton" class="button"><i class="fab fa-spotify fa-spin"></i></a>
+          </section>
+
+          <section id="user" class="user-logged-on">
+              <span id="userName"></span>
+              <a id="logout"><i class="far fa-times-circle"></i></a>
+          </section>
+
+          <section id="playlists" class="user-logged-on">
+
+          </section>
+
+          <section id="playlist" class="user-logged-on" style="display:none;">
+
+          </section>
+
+
+          <footer>
+              <small>made by <a href="https://twitter.com/samskeyti79">@samskeyti79</a></small>
+          </footer>
+
+          <div class="templates">
+
+              <div class="playlist-item-template">
+                  <div class="playlist-cover"></div>
+                  <h2 class="playlist-title"></h2>
+              </div>
+
+              <div class="playlist-detail-template">
+                  <a class="back"><i class="fas fa-caret-left"></i> Back to playlists</a>
+                  <div>
+                      <div class="playlist-cover"></div>
+                      <h2 class="playlist-title"></h2>
+                      <div class="playlist-description"></div>
+                      <form class="new-playlist-form">
+                          <input type="text" name="name" placeholder="Name of the new playlist..."/><input type="submit" value="Create"/><br/>
+                          <input type="checkbox" name="public" id="public" checked /><label for="public">public playlist</label>
+                      </form>
+                      <h3>Tracks: <span class="playlist-counter"></span></h3>
+                  </div>
+                  <div class="playlist-elements">
+                      <div class="playlist-search">
+                          <h3>Add tracks:</h3>
+                          <form class="search-form">
+                              <div><i class="fas fa-users"></i> <input type="text" name="artist" placeholder="Search tracks by artist..."/></div>
+                              <div><i class="fas fa-circle"></i> <input type="text" name="album" placeholder="Search tracks by album..."/></div>
+                              <div><i class="fas fa-music"></i> <input type="text" name="track" placeholder="Search tracks by title..."/></div>
+                          </form>
+                          <div class="search-result"></div>
+                      </div>
+                      <div class="playlist-tracks">
+                          <h3>Tracks:</h3>
+                          <div class="tracks"></div>
+                      </div>
+                  </div>
+              </div>
+
+              <div class="track-template">
+                  <i class="removeTrack fas fa-trash-alt"></i>
+                  <h4 class="track-title"><i class="fas fa-play-circle play"></i><i class="fas fa-pause-circle pause"></i> <span></span></h4>
+                  <div class="track-info">
+                      <span class="track-artist"></span> - <span class="track-album"></span>
+                  </div>
+              </div>
+
+              <div class="search-template">
+                  <i class="addTrack fas fa-plus-square"></i>
+                  <i class="addedTrack fas fa-check-square"></i>
+                  <h4 class="track-title"><i class="fas fa-play-circle play"></i><i class="fas fa-pause-circle pause"></i> <span></span></h4>
+                  <div class="track-info">
+                      <span class="track-artist"></span> - <span class="track-album"></span>
+                  </div>
+              </div>
+
+          </div>
+      </main>
+      <script src="./js/spotify-web-api.js"></script>
+      <script src="./js/jquery-3.2.1.min.js"></script>
+      <script src="./js/index.js"></script>
+  </body>
+</html>
