@@ -4,7 +4,7 @@ var S = {
     utils: {},
     storage: {},
     ui: {},
-    SOURCE: window.location.href.indexOf('localhost')>=0 ? 'localhost' : '',
+    SOURCE: window.location.href.indexOf('localhost')>=0 ? 'localhost' : (window.location.href.indexOf('github')>=0 ? 'github' : ''),
     store: function() {},
     data: {
         CURRENT_TRACKS: {},
