@@ -50,7 +50,10 @@ S.ui = {
         else $('body').removeClass('logging-in');
     },
     init: function(){
-        spotifyApi.getMe({}, function(err, user){ S.store('user', user); });
+        spotifyApi.getMe({}, function(err, user){ 
+            S.ui.loggingIn(false);
+            S.store('user', user); 
+        });
         S.fn.getPlaylists(0);
     },
     user: function(){
@@ -67,7 +70,7 @@ S.ui = {
     playlists: function(){
         var $playlists = $('#playlists');
         $playlists.empty();
-        var $template = $('.playlist-item-template');
+        var $template = $('.templates .playlist-item-template');
         var playlists = S.store('playlists');
         var user = S.store('user');
         if(playlists && playlists.items && playlists.items.length && user){
@@ -97,7 +100,7 @@ S.ui = {
     },
     tracks: function(){
         var $tracks = $('#playlist .tracks').empty();
-        var $template = $('.track-template');
+        var $template = $('.templates .track-template');
         var tracks = S.store('tracks');
         if(tracks && tracks.items){
             for(var i=0; i<tracks.items.length; i++){
@@ -120,7 +123,7 @@ S.ui = {
     },
     search: function(){
         var $result = $('#playlist .search-result').empty();
-        var $template = $('.search-template');
+        var $template = $('.templates .search-template');
         var search = S.store('search');
         if(search && search.items){
             for(var i=0; i<search.items.length; i++){
@@ -138,7 +141,8 @@ S.ui = {
                 S.handlers.trackClick($t, 'Add');
                 S.handlers.playClick($t, $t.find('.play'), t);
                 S.handlers.pauseClick($t, $t.find('.pause'), t);
-                S.handlers.addTrackClick($t, $t.find('.addTrack'), t)
+                S.handlers.addTrackClick($t, $t.find('.addTrack'), t);
+                S.handlers.addToOthersClick($t, $t.find('.addToOthers'), t);
                 $result.append($t);
             }
         }
@@ -146,7 +150,7 @@ S.ui = {
     openPlaylist: function(id, index){
         $('#playlists').hide();
         $('#playlist').empty();
-        var $template = $('.playlist-detail-template');
+        var $template = $('.templates .playlist-detail-template');
         var p = index>=0 ? S.store('playlists').items[index] : { id: 'new', name: '', images: [{url:''}], tracks: { total:0 }};
         var $p = $template.clone();
         $p.find('.playlist-title').text(p.name);
@@ -176,6 +180,25 @@ S.ui = {
         if(p.id==='new') {
             S.handlers.newPlaylistSubmit($p.find('form.new-playlist-form'));
         }
+    },
+    showOtherPlaylists: function($e, track){
+        if($e.find('.addtoothers-template').length===0){
+            var $template = $('.templates .addtoothers-template');
+            var $list = $template.clone();
+            var $itemtemplate = $('.templates .addtoplaylist-template');
+            var playlists = S.store('playlists');
+            var user = S.store('user');
+            for(var i=0; i<playlists.items.length; i++){
+                var p = playlists.items[i];
+                if(p.owner && p.owner.id===user.id){
+                    var $p = $itemtemplate.clone();
+                    $p.find('.playlist-title').text(p.name);
+                    S.handlers.addToOtherClick($p, $p.find('.addToOther'), p, track);
+                    $list.append($p);
+                }
+            }
+            $e.append($list);
+        }
     }
 }
 
@@ -195,7 +218,6 @@ S.store = function(key, value){
 
 S.fn = {
     login: function(accessToken){
-        S.ui.loggingIn(false);
         accessToken.timestamp = new Date().getTime();
         S.storage.set('accessToken', accessToken);
         spotifyApi.setAccessToken(accessToken.access_token);
@@ -293,6 +315,21 @@ S.handlers = {
                 }
             });
         })
+    },
+    addToOthersClick: function($t, $d, track){
+        $d.click(function(){
+            $t.addClass('showOthers');
+            S.ui.showOtherPlaylists($t, track);
+        });
+    },
+    addToOtherClick: function($e, $a, playlist, track){
+        $a.click(function(){
+            spotifyApi.addTracksToPlaylist(S.store('user').id, playlist.id, [track.uri], function(err, data){
+                if(!err){
+                    $e.addClass('added');
+                }
+            });
+        });
     },
     removeTrackClick: function($t, $r, track, i){
         $r.click(function(){

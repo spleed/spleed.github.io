@@ -224,6 +224,44 @@ h4.track-title{
     background-position: right top;
     background-repeat: no-repeat;
     background-size: 2.2rem 2.2rem;
+    position: relative;
+}
+.search-template .addToOthers{
+    position: absolute;
+    bottom: 0;
+    right: 0.8rem;
+    display: none;
+    cursor: pointer;
+}
+.search-template.added .addToOthers, .search-template:hover .addToOthers, .search-template.showAdd .addToOthers{
+    display: inherit;
+}
+.showOthers .addToOthers{
+    display: none !important;
+}
+.search-template h5{
+    margin: 0.3rem 0;
+}
+.addtoothers-template .addToOther{
+    cursor: pointer;
+}
+.addtoothers-template .addedToOther, .addtoothers-template .addToOther{
+    float: right;
+}
+.addtoothers-template .addedToOther{
+    display: none;
+}
+.addtoplaylist-template{
+    border: 1px dashed transparent;
+}
+.addtoplaylist-template:hover{
+    border: 1px dashed #828282;
+}
+.addtoplaylist-template.added .addToOther{
+    display: none;
+}
+.addtoplaylist-template.added .addedToOther{
+    display: inline-block;
 }
 
 .templates{
@@ -333,4 +371,7 @@ input{
 }
 .logging-in #loadButton{
     display: block;
+}
+.logging-in #login > div{
+    display: none;
 }
