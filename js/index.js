@@ -178,6 +178,8 @@ S.ui = {
 
 
         if(p.id==='new') {
+            $p.find('.playlist-elements').hide();
+            $p.find('h3').hide();
             S.handlers.newPlaylistSubmit($p.find('form.new-playlist-form'));
         }
     },
