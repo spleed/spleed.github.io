@@ -244,8 +244,12 @@ S.fn = {
                 if(data.total>offset) S.fn.getPlaylists(offset + 50);
             });
     },
-    createPlaylist: function(name, isPublic, description, callback){
-        spotifyApi.createPlaylist(S.store('user').id, { name: name, public: isPublic, description: description }, callback);
+    createPlaylist: function(name, isPublic, description){
+        spotifyApi.createPlaylist(S.store('user').id, { name: name, public: isPublic, description: description }, 
+            function(){
+                window.location.reload();
+            }
+        );
     },
     getPlaylistTracks: function(user, pid, offset){
         spotifyApi.getPlaylistTracks(user, pid, { limit: 100, offset: offset },
