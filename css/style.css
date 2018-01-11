@@ -377,9 +377,6 @@ input{
 }
 
 @media (max-width: 700px){
-    body{
-        background-color: #000;
-    }
     #userName{
         display: none;
     }
