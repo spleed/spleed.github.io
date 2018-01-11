@@ -375,3 +375,50 @@ input{
 .logging-in #login > div{
     display: none;
 }
+
+@media (max-width: 700px){
+    body{
+        background-color: #000;
+    }
+    #userName{
+        display: none;
+    }
+    #playlists{
+        max-width: 600px;
+        text-align: center;
+    }
+    .playlist-item-template{
+        width: 200px;
+    }
+    .playlist-detail-template, .playlist-elements{
+        width: 600px;
+    }
+}
+@media (max-width: 600px){
+    #playlists{
+        max-width: 400px;
+        text-align: center;
+    }
+    .playlist-item-template{
+        width: 200px;
+    }
+    .playlist-detail-template, .playlist-elements{
+        width: 400px;
+        display: block;
+        clear: both;
+    }
+}
+@media (max-width: 400px){
+    #playlists{
+        max-width: 200px;
+        text-align: center;
+    }
+    .playlist-item-template{
+        width: 200px;
+    }
+    .playlist-detail-template, .playlist-elements{
+        width: 300px;
+        display: block;
+        clear: both;
+    }
+}
