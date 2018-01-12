@@ -50,9 +50,9 @@ S.ui = {
         else $('body').removeClass('logging-in');
     },
     init: function(){
-        spotifyApi.getMe({}, function(err, user){ 
+        spotifyApi.getMe({}, function(err, user){
             S.ui.loggingIn(false);
-            S.store('user', user); 
+            S.store('user', user);
         });
         S.fn.getPlaylists(0);
     },
@@ -209,7 +209,7 @@ S.store = function(key, value){
         return S.DATA[key];
     } else {
         S.DATA[key] = value;
-        console.log(S.DATA);
+        //console.log(S.DATA);
         S.ui[key]();
     }
 }
@@ -247,7 +247,7 @@ S.fn = {
             });
     },
     createPlaylist: function(name, isPublic, description){
-        spotifyApi.createPlaylist(S.store('user').id, { name: name, public: isPublic, description: description }, 
+        spotifyApi.createPlaylist(S.store('user').id, { name: name, public: isPublic, description: description },
             function(){
                 window.location.reload();
             }
