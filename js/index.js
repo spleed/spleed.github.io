@@ -8,8 +8,11 @@ var S = {
     store: function() {},
     data: {
         CURRENT_TRACKS: {},
-        CURRENT_PLAYLIST: null
+        CURRENT_PLAYLIST: null,
+        CURRENT_PLAYLIST_PAGE: 0,
+        TOTAL_PLAYLIST_PAGES: 0
     },
+    PAGE_SIZE: 100,
     DATA: {},
     timeouts: {
         refreshTimeout: null,
@@ -116,11 +119,13 @@ S.ui = {
                 S.handlers.playClick($t, $t.find('.play'), t.track);
                 S.handlers.pauseClick($t, $t.find('.pause'), t.track);
                 S.handlers.removeTrackClick($t, $t.find('.removeTrack'), t.track, i);
-                if(tracks.items.length<100){
+                if(i>=S.PAGE_SIZE*S.data.CURRENT_PLAYLIST_PAGE && i<S.PAGE_SIZE*(S.data.CURRENT_PLAYLIST_PAGE+1)){
                     $tracks.append($t);
                 }
             }
             $('.playlist-counter').text(tracks.items.length);
+            $('.playlist-total-pages').text(S.data.TOTAL_PLAYLIST_PAGES);
+            $('.playlist-current-page').text(S.data.CURRENT_PLAYLIST_PAGE);
         }
     },
     search: function(){
@@ -177,7 +182,8 @@ S.ui = {
 
         S.handlers.backClick($p.find('.back'));
         S.handlers.searchChange($p, $p.find('.search-form input'))
-
+        S.handlers.changePlaylistPage($p.find('.playlist-prev-page'), -1);
+        S.handlers.changePlaylistPage($p.find('.playlist-next-page'), 1);
 
         if(p.id==='new') {
             $p.find('.playlist-elements').hide();
@@ -258,10 +264,14 @@ S.fn = {
     getPlaylistTracks: function(user, pid, offset){
         spotifyApi.getPlaylistTracks(user, pid, { limit: 100, offset: offset },
             function(err, data){
-                if(offset==0) S.store('tracks', { items: [], total: 0 });
+                if(offset==0) {
+                    S.store('tracks', { items: [], total: 0 });
+                    S.data.CURRENT_PLAYLIST_PAGE = 0;
+                }
                 var stored = S.store('tracks').items;
                 data.items = stored.concat(data.items);
                 S.store('tracks', data);
+                S.data.TOTAL_PLAYLIST_PAGES = data.items / S.PAGE_SIZE;
                 if(data.total>offset) S.fn.getPlaylistTracks(user, pid, offset + 100);
             });
     },
@@ -373,6 +383,12 @@ S.handlers = {
                 S.fn.search($searchA.val(), $searchD.val(), $searchT.val())
             }, 500);
         });
+    },
+    changePlaylistPage($p, step){
+        S.data.CURRENT_PLAYLIST_PAGE += step;
+        if(S.data.CURRENT_PLAYLIST_PAGE<0) S.data.CURRENT_PLAYLIST_PAGE=0;
+        if(S.data.CURRENT_PLAYLIST_PAGE>S.data.TOTAL_PLAYLIST_PAGES) S.data.CURRENT_PLAYLIST_PAGE=S.data.TOTAL_PLAYLIST_PAGES;
+        S.ui.tracks();
     }
 }
 
