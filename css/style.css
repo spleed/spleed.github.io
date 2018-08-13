@@ -423,7 +423,7 @@ input{
     margin-bottom: 1rem;
     text-align: center;
 }
-.track-pagination i{
+.track-pagination svg{
     margin-right: 1rem;
     margin-left: 1rem;
     font-size: 1.4rem;

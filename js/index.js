@@ -271,7 +271,7 @@ S.fn = {
                 var stored = S.store('tracks').items;
                 data.items = stored.concat(data.items);
                 S.store('tracks', data);
-                S.data.TOTAL_PLAYLIST_PAGES = data.items.length / S.PAGE_SIZE;
+                S.data.TOTAL_PLAYLIST_PAGES = Math.floor(data.items.length / S.PAGE_SIZE) + 1;
                 if(data.total>offset) S.fn.getPlaylistTracks(user, pid, offset + 100);
             });
     },
