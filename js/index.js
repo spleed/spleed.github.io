@@ -271,7 +271,7 @@ S.fn = {
                 var stored = S.store('tracks').items;
                 data.items = stored.concat(data.items);
                 S.store('tracks', data);
-                S.data.TOTAL_PLAYLIST_PAGES = data.items / S.PAGE_SIZE;
+                S.data.TOTAL_PLAYLIST_PAGES = data.items.length / S.PAGE_SIZE;
                 if(data.total>offset) S.fn.getPlaylistTracks(user, pid, offset + 100);
             });
     },
@@ -385,10 +385,12 @@ S.handlers = {
         });
     },
     changePlaylistPage($p, step){
-        S.data.CURRENT_PLAYLIST_PAGE += step;
-        if(S.data.CURRENT_PLAYLIST_PAGE<0) S.data.CURRENT_PLAYLIST_PAGE=0;
-        if(S.data.CURRENT_PLAYLIST_PAGE>S.data.TOTAL_PLAYLIST_PAGES) S.data.CURRENT_PLAYLIST_PAGE=S.data.TOTAL_PLAYLIST_PAGES;
-        S.ui.tracks();
+        $p.click(function(){
+            S.data.CURRENT_PLAYLIST_PAGE += step;
+            if(S.data.CURRENT_PLAYLIST_PAGE<0) S.data.CURRENT_PLAYLIST_PAGE=0;
+            if(S.data.CURRENT_PLAYLIST_PAGE>S.data.TOTAL_PLAYLIST_PAGES) S.data.CURRENT_PLAYLIST_PAGE=S.data.TOTAL_PLAYLIST_PAGES;
+            S.ui.tracks();
+        });
     }
 }
 
