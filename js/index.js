@@ -125,7 +125,7 @@ S.ui = {
             }
             $('.playlist-counter').text(tracks.items.length);
             $('.playlist-total-pages').text(S.data.TOTAL_PLAYLIST_PAGES);
-            $('.playlist-current-page').text(S.data.CURRENT_PLAYLIST_PAGE);
+            $('.playlist-current-page').text(S.data.CURRENT_PLAYLIST_PAGE + 1);
         }
     },
     search: function(){

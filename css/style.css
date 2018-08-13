@@ -423,7 +423,7 @@ input{
     margin-bottom: 1rem;
     text-align: center;
 }
-.track-pagination svg{
+.track-pagination .playlist-prev-page, .track-pagination .playlist-next-page{
     margin-right: 1rem;
     margin-left: 1rem;
     font-size: 1.4rem;
