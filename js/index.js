@@ -116,7 +116,7 @@ S.ui = {
                 S.handlers.playClick($t, $t.find('.play'), t.track);
                 S.handlers.pauseClick($t, $t.find('.pause'), t.track);
                 S.handlers.removeTrackClick($t, $t.find('.removeTrack'), t.track, i);
-                if(track.items.length<100){
+                if(tracks.items.length<100){
                     $tracks.append($t);
                 }
             }
